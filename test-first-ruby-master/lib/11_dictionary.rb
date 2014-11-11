@@ -6,7 +6,10 @@ class Dictionary
 
   def add(*entry)
     entry = entry[0] 
-    entry.is_a?(Hash) ? @entries.merge!(entry) : @entries.store(entry,nil)
+    
+    return @entries.merge! entry if entry.is_a? Hash
+    
+    @entries.store(entry,nil)
   end
 
   def keywords
@@ -14,26 +17,18 @@ class Dictionary
   end
 
   def include?(key)
-    @entries.has_key?(key)
+    @entries.has_key? key
   end
 
   def find(word)
-    @entries.select {|key, value| key.start_with?(word) }
+    @entries.select do |key, value|
+      key.start_with?(word)
+    end
   end
 
   def printable
-    keywords = @entries.keys.sort
-    printout = ""
-    keywords.each do |word|
-      printout = printout + "[#{word}] \"#{@entries[word]}\"\n"
-    end
-    printout.strip!
+    @entries.keys.sort.map do |word|
+      "[#{word}] #{@entries[word].inspect}\n"
+    end.join
   end
-
-
-
 end
-
-
-
-
