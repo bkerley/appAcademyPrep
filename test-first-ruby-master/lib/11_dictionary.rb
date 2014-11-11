@@ -28,7 +28,7 @@ class Dictionary
 
   def printable
     @entries.keys.sort.map do |word|
-      "[#{word}] #{@entries[word].inspect}\n"
-    end.join
+      "[#{word}] #{@entries[word].inspect}"
+    end.join("\n")
   end
 end
